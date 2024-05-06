@@ -1,7 +1,7 @@
 import React, { useState, useEffect } from "react";
 import { NavLink } from "react-router-dom";
 import styles from "./FormItem.module.css";
-import { FaTrash, FaFile, FaCode } from "react-icons/fa";
+import { FaTrash, FaDatabase, FaCode } from "react-icons/fa";
 import Form from "./Form";
 
 const FormItem = (props: {
@@ -57,7 +57,7 @@ const FormItem = (props: {
         </button>
         <button>
           <NavLink to={`/submission/${id}`}>
-            <FaFile style={{ color: "grey", fontSize: "16px" }} />
+            <FaDatabase style={{ color: "grey", fontSize: "16px" }} />
           </NavLink>
         </button>
         <button>

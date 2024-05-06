@@ -1,57 +1,59 @@
 import React, { useState, useEffect } from "react";
 import { useParams } from "react-router-dom";
 import { Form } from '@formio/react';
-import { Formio } from '@formio/js';
-import uswds from '@formio/uswds';
-import '../index.css';
-import '../App.css';
+import { Button } from "react-bootstrap";
 
 const FormSubmission = () => {
-  const form = {
-    title: 'Example Form',
-    display: 'form',
-    components: [
-      {
-        label: 'Name',
-        key: 'name',
-        type: 'textfield',
-      },
-      {
-        label: 'Email',
-        key: 'email',
-        type: 'email',
-      },
-      {
-        label: 'Save',
-        key: 'save',
-        type: 'button',
-        action: 'submit',
-      },
-    ],
-  };
-
-  const data = {
-    name: 'Lane',
-    email: 'lane.cn@gmail.com',
-  }
-
-  const onSubmitHandler = (submission: any) => {
-    console.table(submission.data);
-  }
-
   const { id } = useParams();
+  const url = `https://libresolve.linkpc.net/api/res/_builder_${id}`;
+  const dataUrl = `https://libresolve.linkpc.net/api/res/_submission_${id}`;
+  const [ components, setComponents ] = useState({});
+  const [ submission, setSubmission ] = useState({});
 
-  Formio.use(uswds);
-  
+  useEffect(() => {
+    fetch(url)
+    .then(resp => resp.json())
+    .then(data => {
+      setComponents(() => data);
+    })
+    .catch(err => {
+      setComponents(prev => prev);
+    });
+  }, [url]);
+
+  useEffect(() => {
+    fetch(dataUrl)
+    .then(resp => resp.json())
+    .then(data => {
+      setSubmission(() => data);
+    })
+    .catch(err => {
+      setSubmission(prev => prev);
+    });
+  }, [components, dataUrl]);
+
+  const handleSave = (data: any) => {
+    fetch(dataUrl, {
+      method: 'PUT', 
+      headers: { 'Content-Type': 'application/json' }, 
+      body: JSON.stringify(data)
+    })
+    .then(resp => resp.json())
+    .then(data => console.log(data));
+  }
+
   return (
-      <div className='App'>
-        <h2>ID: {id}</h2>      
-        <Form
-          form={form} 
-          submission={{data: data}} 
-          onSubmit={(submission: any) => onSubmitHandler(submission)} 
-        />
+    <div className='App'>
+      <h2>
+        ID: {id}
+        <Button onClick={() => handleSave(submission)}>Save form submission</Button>
+      </h2>
+      <Form
+        form={components} 
+        submission={submission} 
+        onChange={(arg: any) => setSubmission({data: arg.data})}
+      />
     </div>
-)
+  )
 };
 export default FormSubmission;

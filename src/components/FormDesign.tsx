@@ -1,45 +1,43 @@
 import React, { useState, useEffect } from "react";
 import { useParams } from "react-router-dom";
 import { FormBuilder } from '@formio/react';
-import { Formio } from '@formio/js';
-import uswds from '@formio/uswds';
-import '../index.css';
-import '../App.css';
+import { Button } from "react-bootstrap";
 
 const FormDesign = () => {
   const { id } = useParams();
+  const url = `https://libresolve.linkpc.net/api/res/_builder_${id}`;
+  const [ components, setComponents ] = useState({});
 
-  const form = {
-    title: 'Example Form',
-    display: 'form',
-    components: [
-      {
-        label: 'Name',
-        key: 'name',
-        type: 'textfield',
-      },
-      {
-        label: 'Email',
-        key: 'email',
-        type: 'email',
-      },
-      {
-        label: 'Save',
-        key: 'save',
-        type: 'button',
-        action: 'submit',
-      },
-    ],
-  };
+  useEffect(() => {
+    fetch(url)
+    .then(resp => resp.json())
+    .then(data => {
+      setComponents(() => data);
+    })
+    .catch(err => {
+      setComponents(prev => prev);
+    });
+  }, [url]);
 
-  Formio.use(uswds);
+  const handleSave = (props: any) => {
+    fetch(url, {
+      method: 'PUT', 
+      headers: { 'Content-Type': 'application/json' }, 
+      body: JSON.stringify(props)
+    })
+    .then(resp => resp.json())
+    .then(data => console.log(data));
+  }
 
   return (
     <div className='App'>
-      <h2>ID: {id}</h2>
+      <h2>
+        ID: {id}
+        <Button onClick={() => handleSave(components)}>Save form design</Button>
+      </h2>
       <FormBuilder
-        form={form}
-        onChange={(props: any) => console.log(props)}
+        form={components}
+        onChange={(props: any) => setComponents(props)}
       />
     </div>
   )

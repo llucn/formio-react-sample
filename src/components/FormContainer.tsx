@@ -64,16 +64,16 @@ const FormContainer = () => {
 
   useEffect(() => {
     fetch(url)
-      .then(resp => {
-        return resp.json();
-      })
-      .then(data => {
-        // console.log("Get data", data);
-        setForms(() => [...data.forms]);
-      })
-      .catch(err => {
-        setForms(prev => [...prev]);
-      });
+    .then(resp => {
+      return resp.json();
+    })
+    .then(data => {
+      // console.log("Get data", data);
+      setForms(() => [...data.forms]);
+    })
+    .catch(err => {
+      setForms(prev => [...prev]);
+    });
   }, []);
 
   return (
