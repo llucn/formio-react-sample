@@ -1,9 +1,9 @@
 {
-  "name": "carbon-tutorial",
-  "version": "0.0.0",
+  "name": "formio-react-sample",
+  "version": "0.1.0",
   "private": true,
-  "repository": "git@github.com:carbon-design-system/carbon-tutorial.git",
-  "bugs": "https://github.com/carbon-design-system/carbon-tutorial/issues",
+  "repository": "https://github.com/llucn/formio-react-sample.git",
+  "bugs": "https://github.com/llucn/formio-react-sample/issues",
   "license": "Apache-2.0",
   "homepage": ".",
   "scripts": {
