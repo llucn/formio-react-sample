@@ -1,8 +1,15 @@
 import React, { useState, useEffect } from 'react';
 import { useParams } from 'react-router-dom';
 import './formio-style.scss';
-import { FormBuilder } from '@formio/react';
+import { FormBuilder, Formio } from '@formio/react';
 import { Button } from '@carbon/react';
+import carbonTextInput from '../components/TextInput/TextInput';
+
+Formio.use({
+  components: {
+    carbonTextInput: carbonTextInput,
+  },
+});
 
 const FormDesign = () => {
   const { id } = useParams();
