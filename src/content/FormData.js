@@ -2,7 +2,7 @@ import React, { useState, useEffect } from 'react';
 import { useParams } from 'react-router-dom';
 import './formio-style.scss';
 import { Form, Formio } from '@formio/react';
-import { Button } from '@carbon/react';
+import { Grid, Column, Button } from '@carbon/react';
 import carbonTextInput from '../components/TextInput/TextInput';
 
 Formio.use({
@@ -53,14 +53,22 @@ const FormData = () => {
   };
 
   return (
-    <div className="App">
-      <h2>ID: {id}</h2>
-      <Button onClick={() => handleSave(submission)}>Save Form Data</Button>
-      <Form
-        form={components}
-        submission={submission}
-        onChange={arg => setSubmission({ data: arg.data })}
-      />
+    <div>
+      <Grid className="repo-page">
+        <Column lg={16} md={8} sm={4} className="repo-page__r1">
+          <h2>ID: {id}</h2>
+          <Form
+            form={components}
+            submission={submission}
+            onChange={arg => setSubmission({ data: arg.data })}
+          />
+        </Column>
+      </Grid>
+      <Grid className="repo-page">
+        <Column lg={16} md={8} sm={4} className="repo-page__r1">
+          <Button onClick={() => handleSave(submission)}>Save Form Data</Button>
+        </Column>
+      </Grid>
     </div>
   );
 };
