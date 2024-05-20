@@ -11,6 +11,37 @@ Formio.use({
   },
 });
 
+const options = {
+  builder: {
+    carbon: {
+      title: 'Carbon',
+      weight: 0,
+      default: true,
+    },
+    basic: {
+      title: 'Basic',
+      weight: 10,
+      default: false,
+    },
+    advanced: {
+      title: 'Advanced',
+      weight: 20,
+    },
+    layout: {
+      title: 'Layout',
+      weight: 30,
+    },
+    data: {
+      title: 'Data',
+      weight: 40,
+    },
+    premium: {
+      title: 'Premium',
+      weight: 50,
+    },
+  },
+};
+
 const FormDesign = () => {
   const { id } = useParams();
   const url = `https://libresolve.linkpc.net/api/res/_builder_${id}`;
@@ -43,7 +74,11 @@ const FormDesign = () => {
     <div className="App">
       <h2>ID: {id}</h2>
       <Button onClick={() => handleSave(components)}>Save Form Design</Button>
-      <FormBuilder form={components} onChange={props => setComponents(props)} />
+      <FormBuilder
+        form={components}
+        options={options}
+        onChange={props => setComponents(props)}
+      />
     </div>
   );
 };

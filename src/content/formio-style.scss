@@ -42,3 +42,49 @@ div.spacer {
 .builder-group-button {
   width: 100%;
 }
+
+// ---
+body {
+  font-weight: 400;
+  font-family: 'IBM Plex Sans', system-ui, -apple-system, BlinkMacSystemFont,
+    '.SFNSText-Regular', sans-serif;
+  -moz-osx-font-smoothing: grayscale;
+  -webkit-font-smoothing: antialiased;
+  text-rendering: optimizeLegibility;
+}
+
+.col-form-label {
+  font-size: 0.75rem;
+  font-size: var(--cds-label-01-font-size, 0.75rem);
+  font-weight: 400;
+  font-weight: var(--cds-label-01-font-weight, 400);
+  line-height: 1.33333;
+  line-height: var(--cds-label-01-line-height, 1.33333);
+  letter-spacing: 0.32px;
+  letter-spacing: var(--cds-label-01-letter-spacing, 0.32px);
+  display: inline-block;
+  color: #525252;
+  color: var(--cds-text-secondary, #525252);
+  font-weight: 400;
+  line-height: 1rem;
+  margin-block-end: 0.5rem;
+  vertical-align: baseline;
+}
+
+.form-text {
+  font-size: 0.75rem;
+  font-size: var(--cds-label-01-font-size, 0.75rem);
+  font-weight: 400;
+  font-weight: var(--cds-label-01-font-weight, 400);
+  line-height: 1.33333;
+  line-height: var(--cds-label-01-line-height, 1.33333);
+  letter-spacing: 0.32px;
+  letter-spacing: var(--cds-label-01-letter-spacing, 0.32px);
+  display: inline-block;
+  color: #525252;
+  color: var(--cds-text-secondary, #525252);
+  font-weight: 400;
+  line-height: 1rem;
+  margin-block-end: 0.5rem;
+  vertical-align: baseline;
+}
