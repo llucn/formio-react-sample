@@ -4,40 +4,45 @@ import { ReactComponent } from '@formio/react';
 import settingsForm from './TextInput.settingsForm';
 import { TextInput, TextInputSkeleton } from '@carbon/react';
 
-const CarbonTextInputComp = ({ component, value, onChange }) => {
+const CarbonTextInputComp = ({ component, onChange, setCallback }) => {
+  const [loading, setLoading] = useState(true);
   const [state, setState] = useState({
-    value: value,
+    value: '',
   });
 
   const setValue = text => {
     setState(() => ({ value: text }), onChange(text));
   };
 
-  if (state.value || true) {
-    return (
-      <TextInput
-        id={`carbon_component_${component.key}`}
-        type="text"
-        // labelText={component.label}
-        // helperText={component.description}
-        placeholder={component.placeholder}
-        value={state.value}
-        onChange={e => setValue(e.target.value)}
-      />
-    );
+  const callback = (dataValue, data) => {
+    setState(() => ({ value: dataValue || '' }), setLoading(false));
+  };
+
+  useEffect(() => {
+    setCallback(callback);
+  }, [setCallback]);
+
+  if (loading) {
+    return <TextInputSkeleton hideLabel={true} />;
   }
 
-  return <TextInputSkeleton />;
+  return (
+    <TextInput
+      id={`carbon_component_${component.key}`}
+      type="text"
+      labelText={''}
+      placeholder={component.placeholder}
+      value={state.value}
+      onChange={e => setValue(e.target.value)}
+    />
+  );
 };
 
 export default class CarbonTextInput extends ReactComponent {
   constructor(component, options, data) {
     super(component, options, data);
-  }
-
-  init() {
-    super.init();
-    console.log('init: ', this.getValue());
+    this.data = data;
+    this.callback = null;
   }
 
   static get builderInfo() {
@@ -65,8 +70,8 @@ export default class CarbonTextInput extends ReactComponent {
     return ReactDOM.render(
       <CarbonTextInputComp
         component={this.component}
-        value={this.dataValue}
         onChange={this.updateValue}
+        setCallback={this.setCallback}
       />,
       element
     );
@@ -76,5 +81,18 @@ export default class CarbonTextInput extends ReactComponent {
     if (element) {
       ReactDOM.unmountComponentAtNode(element);
     }
+  }
+
+  setCallback = callback => {
+    this.callback = callback;
+  };
+
+  setValue(value) {
+    super.setValue(value);
+    setTimeout(() => {
+      if (this.callback) {
+        this.callback(this.dataValue, this.data);
+      }
+    }, 0);
   }
 }
